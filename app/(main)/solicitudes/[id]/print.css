@@ -1,0 +1,78 @@
+
+@media print {
+  body {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .printable-solicitud .card-header img {
+    max-width: 250px !important; /* Aumentar el tamaño del logo */
+    margin-bottom: 1rem;
+  }
+
+  .printable-solicitud .print-header {
+    display: block !important;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid #dee2e6;
+    padding-bottom: 1rem;
+  }
+
+  .printable-solicitud .print-header h5 {
+    font-size: 14px;
+    font-weight: bold;
+  }
+
+  .printable-solicitud .print-header p {
+    font-size: 12px;
+    margin-bottom: 0.25rem;
+  }
+
+  .printable-solicitud .table thead th {
+    font-size: 10px; /* Reducir el tamaño de los títulos de la tabla */
+  }
+
+  .printable-solicitud .notas-adicionales p {
+    font-size: 12px !important; /* Reducir el tamaño del texto de Notas */
+  }
+  
+  .printable-solicitud .prioridad-cell {
+    text-transform: uppercase; /* Convertir a mayúsculas */
+  }
+
+  .printable-solicitud .card {
+    border: none;
+    box-shadow: none;
+  }
+
+  .printable-solicitud .card-footer,
+  .printable-solicitud .btn,
+  .printable-solicitud .alert-info,
+  .printable-solicitud .admin-form {
+    display: none !important; /* Ocultar elementos no deseados */
+  }
+
+  .printable-solicitud .card-body {
+    padding: 0;
+  }
+
+  .printable-solicitud .table {
+    page-break-inside: auto;
+  }
+
+  .printable-solicitud tr {
+    page-break-inside: avoid;
+    page-break-after: auto;
+  }
+
+  .printable-solicitud thead {
+    display: table-header-group;
+  }
+  
+  .printable-solicitud {
+    page-break-before: always;
+  }
+
+  .printable-solicitud:first-child {
+    page-break-before: auto;
+  }
+}

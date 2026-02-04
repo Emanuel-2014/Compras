@@ -1,0 +1,92 @@
+.matrixContainer {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+    gap: 1rem;
+    position: relative;
+    padding: 2rem;
+    border: 1px solid #dee2e6;
+    border-radius: .375rem;
+    margin-top: 2rem;
+}
+
+.axisLabelY {
+    position: absolute;
+    left: -4rem;
+    top: 50%;
+    transform: rotate(-90deg) translateY(-50%);
+    transform-origin: center;
+    font-weight: bold;
+    color: #6c757d;
+}
+
+.axisLabelX {
+    position: absolute;
+    bottom: -2.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    font-weight: bold;
+    color: #6c757d;
+}
+
+.quadrantCard {
+    height: 100%;
+    min-height: 250px;
+    color: var(--foreground);
+    border-width: 2px;
+    border-style: solid;
+}
+
+.quadrantTitle {
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+
+.quadrantDescription {
+    font-style: italic;
+    color: var(--secondary-color);
+    font-size: 0.9rem;
+}
+
+.itemList {
+    padding-left: 0;
+    list-style: none;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.itemList li {
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+
+.leverageBg {
+    background-color: rgba(40, 167, 69, 0.15);
+    border-color: rgba(40, 167, 69, 0.5);
+}
+
+.strategicBg {
+    background-color: rgba(220, 53, 69, 0.15);
+    border-color: rgba(220, 53, 69, 0.5);
+}
+
+.nonCriticalBg {
+    background-color: rgba(255, 193, 7, 0.15);
+    border-color: rgba(255, 193, 7, 0.5);
+}
+
+.bottleneckBg {
+    background-color: rgba(23, 162, 184, 0.15);
+    border-color: rgba(23, 162, 184, 0.5);
+}
+
+@media (max-width: 768px) {
+    .matrixContainer {
+        grid-template-columns: 1fr;
+    }
+
+    .axisLabelY {
+        display: none; /* Hide on smaller screens for simplicity */
+    }
+}

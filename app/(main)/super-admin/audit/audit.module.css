@@ -1,0 +1,100 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.header h2 {
+  margin: 0;
+  background: linear-gradient(135deg, #DC143C 0%, #1a1a1a 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: bold;
+}
+
+.statCard {
+  background: linear-gradient(135deg, #DC143C 0%, #8B0000 100%);
+  border: none;
+  color: white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s;
+}
+
+.statCard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(220, 20, 60, 0.3);
+}
+
+.statTitle {
+  font-size: 0.875rem;
+  opacity: 0.9;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.statValue {
+  font-size: 2rem;
+  font-weight: bold;
+  line-height: 1;
+}
+
+.tableWrapper {
+  overflow-x: auto;
+  max-height: 600px;
+  overflow-y: auto;
+}
+
+.dateCell {
+  white-space: nowrap;
+  font-family: 'Courier New', monospace;
+  font-size: 0.875rem;
+}
+
+.userCell {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.userCell strong {
+  font-size: 0.875rem;
+}
+
+.userCell small {
+  font-size: 0.75rem;
+}
+
+.detailsCell {
+  max-width: 300px;
+  word-wrap: break-word;
+  font-size: 0.875rem;
+}
+
+.tableWrapper table {
+  margin-bottom: 0;
+}
+
+.tableWrapper thead {
+  position: sticky;
+  top: 0;
+  background: white;
+  z-index: 10;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.tableWrapper thead th {
+  background: linear-gradient(135deg, #DC143C 0%, #8B0000 100%);
+  color: white;
+  border-color: #8B0000 !important;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.875rem;
+  letter-spacing: 0.5px;
+}
+
+.tableWrapper tbody tr:hover {
+  background-color: rgba(220, 20, 60, 0.05);
+}

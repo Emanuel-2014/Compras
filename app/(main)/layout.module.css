@@ -1,0 +1,20 @@
+/* app/(main)/layout.module.css */
+.mainLayout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.mainContent {
+  flex: 1;
+  padding: 20px;
+}
+
+.tableHeader th {
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.smallFontTable {
+  font-size: 0.85rem;
+}

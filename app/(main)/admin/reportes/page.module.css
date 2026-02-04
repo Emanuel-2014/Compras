@@ -1,0 +1,159 @@
+/* app/(main)/admin/reportes/page.module.css */
+.container {
+    padding: 2rem;
+    background-color: #f4f7f6;
+    min-height: 100vh;
+}
+
+.pageTitle {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 2rem;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* --- Filtros --- */
+.filtersContainer {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    padding: 1rem;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.filterInput {
+    padding: 0.6rem 0.8rem; /* Reducimos el padding */
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 0.9rem; /* Hacemos el texto más pequeño */
+    background-color: #fff;
+    flex-grow: 1;
+    color: #333; /* Asegura que el texto sea oscuro y legible */
+    min-width: 180px; /* Reducimos el ancho mínimo */
+}
+
+.filterButtonContainer {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.button {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.2s, transform 0.1s;
+}
+
+.filterButton {
+    background-color: #6c757d;
+    color: white;
+}
+
+.filterButton:hover {
+    background-color: #5a6268;
+}
+
+/* --- Tarjetas de Estadísticas --- */
+.statsGrid {
+    display: flex; /* Usamos flexbox para alinear */
+    flex-wrap: wrap; /* Permitimos que se envuelva en pantallas muy pequeñas */
+    gap: 1rem; /* Reducimos el espacio entre tarjetas */
+    justify-content: center; /* Centramos el grupo de tarjetas */
+    margin-bottom: 2.5rem;
+}
+
+.statCard {
+    background-color: #fff;
+    padding: 1rem; /* Reducimos el padding interno */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+    text-align: center;
+    transition: transform 0.2s, box-shadow 0.2s;
+    flex: 1; /* Hacemos que las tarjetas sean flexibles */
+    min-width: 130px; /* Ancho mínimo más pequeño */
+    max-width: 160px; /* Ancho máximo para que no se estiren demasiado */
+}
+
+.statCard:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+.statCard h3 {
+    font-size: 0.9rem;
+    font-weight: 500; /* Hacemos el texto un poco más ligero */
+    color: #555;
+    margin-bottom: 0.5rem; /* Reducimos el margen */
+    text-transform: uppercase;
+}
+
+.statCard p {
+    font-size: 2rem; /* Reducimos el tamaño del número */
+    font-weight: 700;
+    color: #333;
+    margin: 0;
+}
+
+/* --- Contenedor de Gráficos --- */
+.chartsContainer {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 2rem;
+}
+
+.chartCard {
+    background-color: #fff;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+    display: flex;
+    flex-direction: column;
+}
+
+.chartCard h3 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    font-size: 1.2rem;
+    color: #444;
+}
+
+.chartWrapper {
+    position: relative;
+    height: 350px; /* Altura fija para los gráficos */
+    flex-grow: 1;
+}
+
+.chartWrapper p {
+    text-align: center;
+    color: #888;
+    margin-top: 4rem;
+}
+
+.chartFooter {
+    margin-top: 1rem;
+    text-align: right;
+}
+
+.copyButton {
+    background-color: #007bff;
+    color: white;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background-color 0.2s;
+}
+
+.copyButton:hover {
+    background-color: #0056b3;
+}

@@ -1,0 +1,189 @@
+/* app/admin/usuarios/page.module.css */
+
+.container {
+  width: 100%; /* Ensure it takes full width */
+  padding: 2rem;
+  background-color: #ffffff; /* Keep background for content area */
+  border-radius: 8px; /* Keep border-radius for content area */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* Keep shadow for content area */
+  font-family: 'Arial', sans-serif;
+  color: #333;
+}
+
+.pageTitle {
+  color: #0056b3;
+  text-align: center;
+  margin-bottom: 2rem;
+  font-size: 2.5rem;
+}
+
+.button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.2s ease;
+  margin-bottom: 1.5rem;
+}
+
+.button:hover {
+  background-color: #0056b3;
+}
+
+.formContainer {
+  background-color: #f8f9fa;
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.formContainer h2 {
+  color: #0056b3;
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  font-size: 1.8rem;
+}
+
+.form {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+}
+
+.formGroup {
+  margin-bottom: 0;
+}
+
+.formGroup label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+  color: #555;
+}
+
+.input,
+.select {
+  width: 100%;
+  padding: 0.8rem;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+.input:focus,
+.select:focus {
+  border-color: #007bff;
+  outline: none;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.warning {
+  color: #ffc107;
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+  grid-column: 1 / -1;
+}
+
+.actionButtons {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  justify-content: flex-end;
+  grid-column: 1 / -1;
+}
+
+.usersList h2 {
+  color: #0056b3;
+  margin-bottom: 1.5rem;
+  font-size: 1.8rem;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+.table th,
+.table td {
+  border: 1px solid #dee2e6;
+  padding: 0.4rem 0.6rem;
+  font-size: 0.75rem;
+  vertical-align: middle;
+}
+
+.table th {
+  background-color: #e9ecef;
+  font-weight: bold;
+  color: #495057;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.table td {
+  text-transform: uppercase;
+}
+
+.table td:first-child {
+  text-align: center;
+}
+
+/* Actions column specific styles */
+.table td:last-child {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.table tbody tr:nth-child(even) {
+  background-color: #f8f9fa;
+}
+
+.actionButton {
+  background-color: #6c757d;
+  color: white;
+  border: none;
+  padding: 0.25rem 0.5rem;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 0.7rem;
+  transition: background-color 0.2s ease;
+  white-space: nowrap;
+}
+
+.actionButton:hover {
+  background-color: #5a6268;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .container {
+    margin: 1rem auto;
+    padding: 1rem;
+  }
+
+  .button {
+    width: 100%;
+  }
+
+  .actionButtons {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .actionButton {
+    width: auto; /* Allow button to size to content */
+    margin-right: 0;
+    margin-bottom: 0;
+  }
+
+  .form {
+    grid-template-columns: 1fr;
+  }
+}

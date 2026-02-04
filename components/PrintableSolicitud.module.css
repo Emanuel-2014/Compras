@@ -1,0 +1,203 @@
+.container {
+    font-family: Arial, sans-serif;
+    color: #333;
+    background-color: white;
+    padding: 20px;
+    border: 1px solid #ccc;
+    margin: 20px;
+}
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #004aad;
+    padding-bottom: 15px;
+    margin-bottom: 20px;
+}
+.logoContainer {
+    flex: 1;
+}
+.companyInfo {
+    flex: 2;
+    text-align: center;
+}
+.companyInfo h1 {
+    margin: 0;
+    font-size: 24px;
+    color: #004aad;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+.companyInfo p {
+    margin: 2px 0;
+    font-size: 14px;
+}
+.detailsSection {
+    margin-bottom: 20px;
+    font-size: 14px;
+}
+.detailRow {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+.detailRow span {
+    flex: 1;
+}
+.itemsSection {
+    margin-bottom: 20px;
+}
+.itemsTable {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 10px;
+    border: 1px solid #000;
+}
+.itemsTable th,
+.itemsTable td {
+    border: 1px solid #000;
+    padding: 4px;
+    text-align: left;
+}
+.itemsTable th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+    text-align: center;
+    font-size: 10px;
+}
+.itemsTable th:first-child,
+.itemsTable td:first-child {
+  width: 20%; /* ligeramente reducido */
+}
+.itemsTable th:nth-child(2),
+.itemsTable td:nth-child(2) {
+  width: 25%; /* reducido para dar espacio a observaciones */
+}
+.itemsTable th:nth-child(3),
+.itemsTable td:nth-child(3) {
+  width: 25%; /* reducido para dar espacio a observaciones */
+}
+.itemsTable th:nth-child(4),
+.itemsTable td:nth-child(4) {
+  width: 8%;
+  text-align: center;
+}
+.itemsTable th:nth-child(5), /* OBSERVACIONES */
+.itemsTable td:nth-child(5) {
+  width: 37%; /* El restante */
+  word-wrap: break-word; /* Romper palabras largas para evitar desbordamiento */
+}
+.notesSection {
+    font-size: 10px;
+    border-top: 1px solid #ccc;
+    padding-top: 10px;
+}
+.notesSection h3 {
+    margin-top: 0;
+}
+.signaturesSection {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 50px; /* Adjust as needed for spacing from notes */
+    font-size: 12px;
+    width: 100%;
+}
+.signatureBox {
+    flex: 1;
+    text-align: center;
+    padding: 10px;
+    margin: 0 10px; /* Spacing between boxes */
+}
+.signatureBox p {
+    margin: 5px 0 0 0;
+}
+.signatureName {
+    font-weight: bold;
+    font-size: 14px;
+    min-height: 1.5em; /* Reserve space for the name */
+    padding-bottom: 2px;
+}
+.signatureLine {
+    border-top: 1px solid #000;
+    margin: 0 auto;
+    width: 80%; /* Adjust width of the line */
+}
+/* Estilos para la nueva sección de recepción */
+.receptionHr {
+    border: none;
+    border-top: 3px solid #000;
+    margin: 40px 0;
+}
+.receptionTable {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 10px;
+    border: 1px solid #000;
+}
+.receptionTable th,
+.receptionTable td {
+    border: 1px solid #000;
+    padding: 4px; /* Reduced padding */
+    text-align: left;
+}
+.receptionTable th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+    text-align: center;
+}
+.receptionSection {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    padding: 15px;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+.receptionTitle {
+    font-size: 18px;
+    color: #004aad;
+    text-align: center;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+.receptionSubtitle {
+    font-size: 12px;
+    text-align: center;
+    margin-bottom: 15px;
+    font-style: italic;
+    font-weight: bold;
+}
+.signatureCode {
+    font-size: 10px;
+    color: #555;
+    font-style: italic;
+}
+@media print {
+  .container {
+    margin: 0;
+    border: none;
+    padding: 0;
+  }
+  @page {
+    margin: 0.5cm;
+  }
+
+  /* Forzar bordes en las tablas para impresión */
+  .itemsTable,
+  .itemsTable th,
+  .itemsTable td,
+  .receptionTable,
+  .receptionTable th,
+  .receptionTable td {
+    border: 1px solid #000 !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .itemsTable th,
+  .receptionTable th {
+    background-color: #f2f2f2 !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}

@@ -1,0 +1,125 @@
+/* components/LoginPage.module.css */
+
+.loginContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: var(--background); /* Fallback color */
+  font-family: 'Arial', sans-serif;
+}
+
+.loginCard {
+  background-color: var(--background);
+  padding: 2.5rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  width: 100%;
+  max-width: 400px;
+  border: 1px solid rgba(0,0,0,0.1);
+}
+
+.logo {
+  margin-bottom: 1.5rem;
+  height: auto; /* Ensure aspect ratio is maintained */
+  /* Asegúrate de que el logo.png exista en la carpeta public */
+}
+
+.title {
+  color: var(--foreground);
+  margin-bottom: 2rem;
+  font-size: 2rem;
+  text-transform: uppercase;
+}
+
+.loginForm {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.formGroup {
+  text-align: center;
+}
+
+.formGroup label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+  color: var(--foreground);
+  text-transform: uppercase;
+}
+
+.input {
+  width: 100%;
+  padding: 0.9rem;
+  border: 1px solid rgba(0,0,0,0.2);
+  border-radius: 5px;
+  font-size: 1rem;
+  box-sizing: border-box;
+  background-color: var(--background);
+  color: var(--foreground);
+}
+
+.input:focus {
+  border-color: var(--primary-color);
+  outline: none;
+  box-shadow: 0 0 0 0.2rem rgba(255, 0, 0, 0.25);
+}
+
+.error {
+  color: var(--primary-color);
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+}
+
+.button {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1.1rem;
+  font-weight: bold;
+  transition: background-color 0.2s ease;
+  margin-top: 1rem;
+  text-transform: uppercase;
+}
+
+.button:hover {
+  filter: brightness(0.9);
+}
+
+.button:disabled {
+  background-color: var(--primary-color);
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.passwordWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.showPasswordButton {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #666;
+}
+
+.links {
+  margin-top: 1rem;
+}

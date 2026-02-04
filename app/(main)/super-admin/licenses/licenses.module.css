@@ -1,0 +1,16 @@
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.licenseKey {
+  font-size: 0.85rem;
+  background-color: #f8f9fa;
+  padding: 4px 8px;
+  border-radius: 4px;
+  display: inline-block;
+  max-width: 300px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

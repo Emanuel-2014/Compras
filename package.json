@@ -1,0 +1,57 @@
+{
+  "name": "solicitud-compras-sistema",
+  "version": "1.0.0",
+  "description": "Sistema completo de gestión de solicitudes de compra con flujo de aprobaciones multi-nivel",
+  "author": "Tu Empresa",
+  "license": "UNLICENSED",
+  "private": true,
+  "type": "module",
+  "keywords": [
+    "solicitudes",
+    "compras",
+    "aprobaciones",
+    "facturas",
+    "proveedores",
+    "next.js",
+    "react"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tu-usuario/solicitud-compras"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  },
+  "scripts": {
+    "dev": "next dev -p 3000",
+    "build": "next build",
+    "start": "next start -p 3000",
+    "init": "node init-db.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "better-sqlite3": "^12.4.1",
+    "bootstrap": "^5.3.8",
+    "chart.js": "^4.5.0",
+    "chartjs-adapter-date-fns": "^3.0.0",
+    "cookie": "^1.0.2",
+    "exceljs": "^4.4.0",
+    "html2canvas": "^1.4.1",
+    "jsonwebtoken": "^9.0.2",
+    "jspdf": "^4.0.0",
+    "next": "^16.1.6",
+    "puppeteer": "^24.31.0",
+    "react": "19.1.0",
+    "react-bootstrap": "^2.10.10",
+    "react-chartjs-2": "^5.3.0",
+    "react-datepicker": "^8.7.0",
+    "react-dom": "19.1.0",
+    "react-icons": "^5.5.0",
+    "react-to-print": "^3.1.1",
+    "sweetalert2": "^11.26.3"
+  },
+  "devDependencies": {
+    "dotenv": "^16.4.7"
+  }
+}

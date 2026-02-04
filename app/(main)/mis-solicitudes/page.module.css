@@ -1,0 +1,414 @@
+/* app/mis-solicitudes/page.module.css */
+
+.container {
+  width: 100%; /* Ensure it takes full width */
+  padding: 2rem;
+  background-color: var(--background); /* Keep background for content area */
+  border-radius: 8px; /* Keep border-radius for content area */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* Keep shadow for content area */
+  font-family: 'Arial', sans-serif;
+  color: var(--foreground);
+}
+
+
+
+.solicitudesList {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.solicitudCard {
+  border: 1px solid #e0e0e0; /* Lighter border */
+  border-radius: 8px;
+  padding: 1.5rem;
+  background-color: #ffffff; /* White background for cards */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* More prominent shadow */
+  color: #333; /* Darker text for better contrast on white background */
+  min-width: 0; /* Allow flex item to shrink smaller than its content */
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid #f0f0f0; /* Lighter border */
+  padding-bottom: 0.8rem;
+}
+
+.cardHeader h2 {
+  color: var(--primary-color); /* Use primary color for headings */
+  font-size: 1.1rem;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.solicitudCard p {
+  margin: 0.5rem 0;
+  font-size: 1rem;
+  color: #555; /* Slightly lighter text for paragraphs */
+  text-transform: uppercase;
+}
+
+.solicitudCard strong {
+  color: #333; /* Darker text for strong elements */
+  opacity: 1;
+}
+
+.button,
+.actionButton,
+.deleteButton,
+.buttonRed,
+.buttonSecondary {
+  color: white;
+  border: none;
+  padding: 0.9rem 1.5rem;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: bold;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.button {
+  background-color: var(--primary-color);
+}
+
+.button:hover {
+  background-color: #5a6268;
+  box-shadow: 0 0 0 0.2rem rgba(108, 117, 125, 0.5);
+}
+
+.actionButton {
+  background-color: #007bff; /* Primary blue */
+  padding: 0.4rem 0.7rem; /* Smaller padding */
+  font-size: 0.75rem; /* Smaller font size */
+}
+
+.actionButton:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.deleteButton {
+  background-color: #dc3545; /* Danger red */
+  padding: 0.4rem 0.7rem; /* Smaller padding to match actionButton */
+  font-size: 0.75rem; /* Smaller font size to match actionButton */
+}
+
+.deleteButton:hover {
+  background-color: #c82333; /* Darker red on hover */
+  box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
+}
+
+.buttonRed {
+  background-color: #dc3545; /* Red */
+}
+
+.buttonRed:hover {
+  background-color: #c82333; /* Darker red */
+}
+
+.buttonSecondary {
+  background-color: #6c757d;
+}
+
+.buttonSecondary:hover {
+  background-color: #5a6268;
+}
+
+.button:disabled {
+  background-color: var(--primary-color);
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.detailsSection {
+  margin-top: 1.5rem;
+  padding: 1.5rem 1rem;
+  border-top: 1px dashed #e0e0e0; /* Lighter dashed border */
+}
+
+.detailsSection h3 {
+  color: var(--primary-color);
+  margin-bottom: 1rem;
+  font-size: 1.3rem;
+  text-transform: uppercase;
+}
+
+.itemsTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+.itemsTable th,
+.itemsTable td {
+  border: 1px solid #f0f0f0; /* Lighter table borders */
+  padding: 0.4rem 0.6rem; /* More compact padding */
+  text-align: left;
+  font-size: 0.9rem; /* Smaller font */
+  color: #444; /* Darker text for table content */
+}
+
+.itemsTable th {
+  background-color: #f8f8f8; /* Light background for table headers */
+  font-weight: bold;
+  color: #333;
+  text-transform: uppercase;
+  text-align: center; /* Center all headers */
+}
+
+/* Column-specific styles */
+.itemsTable th:first-child,
+.itemsTable td:first-child {
+  width: 100px; /* Prioridad */
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.itemsTable th:nth-child(3),
+.itemsTable td:nth-child(3) {
+  width: 80px; /* Cantidad */
+  text-align: center;
+}
+
+.itemsTable th:nth-child(8),
+.itemsTable td:nth-child(8) {
+  width: 150px; /* Estado Recepción */
+}
+
+.itemsTable td:nth-child(8) select {
+  text-transform: uppercase;
+}
+
+.itemsTable tbody tr:nth-child(even) {
+  background-color: #fdfdfd; /* Very light background for even rows */
+}
+
+/* Estilos para los estados de la solicitud */
+.status {
+  display: inline-block;
+  padding: 0.4em 0.8em;
+  font-size: 0.85rem;
+  font-weight: 700;
+  line-height: 1;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: 0.375rem;
+  text-transform: capitalize;
+}
+
+.status-pendiente {
+  color: #856404;
+  background-color: var(--warning-bg);
+  border: 1px solid #ffeeba;
+}
+
+.status-aprobada {
+  color: #155724;
+  background-color: var(--success-bg);
+  border: 1px solid #c3e6cb;
+}
+
+.status-rechazada {
+  color: #721c24;
+  background-color: var(--danger-bg);
+  border: 1px solid #f5c6cb;
+}
+
+.status-completada {
+  color: #0c5460;
+  background-color: var(--info-bg);
+  border: 1px solid #bee5eb;
+}
+
+.status-en-proceso {
+  color: #856404; /* Similar a pendiente pero podría ser otro color */
+  background-color: #fff3cd;
+  border: 1px solid #ffeeba;
+}
+
+.status-cerrada {
+  color: #383d41;
+  background-color: #e2e3e5;
+  border: 1px solid #d6d8db;
+}
+
+.rejection-comment {
+  color: #dc3545; /* Bootstrap's danger red */
+  font-weight: bold;
+}
+
+.tableWrapper {
+  display: block;
+  width: 100%;
+  /* overflow-x: auto; */ /* Removed to prevent horizontal scroll */
+  -webkit-overflow-scrolling: touch; /* For smoother scrolling on iOS */
+  scrollbar-width: thin; /* For Firefox */
+  scrollbar-color: var(--primary-color) #e0e0e0; /* For Firefox */
+}
+
+/* For Chrome, Safari, and Edge */
+.tableWrapper::-webkit-scrollbar {
+  height: 12px;
+}
+
+.tableWrapper::-webkit-scrollbar-track {
+  background: #e0e0e0;
+  border-radius: 10px;
+}
+
+.tableWrapper::-webkit-scrollbar-thumb {
+  background-color: var(--primary-color);
+  border-radius: 10px;
+  border: 3px solid #e0e0e0;
+}
+
+/*
+.itemsTable {
+  min-width: 1200px; 
+  border-collapse: collapse;
+  margin-top: 1rem;
+  table-layout: fixed;
+}
+*/
+
+.filtersContainer {
+  background-color: #f8f9fa; /* Light background for filters */
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+  display: grid; /* Changed to grid */
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* Responsive columns */
+  gap: 1rem;
+  align-items: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.filterInput {
+  padding: 0.6rem 1rem;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  background-color: #ffffff; /* Ensure white background */
+  color: #000000; /* Ensure black text for visibility */
+  /* flex: 1; Removed for grid */
+  min-width: 150px; /* Still useful for grid template */
+  text-transform: uppercase;
+}
+
+.filterInput::placeholder {
+    text-transform: uppercase;
+}
+
+.filterInput:focus {
+  border-color: #80bdff;
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.actionButtons {
+  margin-top: 1.5rem;
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-start; /* Align buttons to the left */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .container {
+    margin: 1rem auto;
+    padding: 1rem;
+  }
+
+  .cardHeader {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .cardHeader h2 {
+    margin-bottom: 0.5rem;
+  }
+
+  .toggleButton, .printButton, .saveButton {
+    width: 100%;
+    margin-top: 0.8rem;
+    margin-right: 0; /* Remove right margin on small screens */
+  }
+
+  .filtersContainer {
+    /* Now a responsive grid, no need to change direction */
+    gap: 0.8rem;
+  }
+
+  .applyFiltersButton {
+    width: 100%; /* Full width on mobile for better UX */
+    justify-self: stretch; /* Allow it to span full width of the grid area */
+  }
+
+  .actionButtons {
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+}
+
+/* Estilos para los inputs dentro de la tabla */
+.tableInput {
+  background-color: #ffffff !important; /* Forzar fondo blanco */
+  color: #000000 !important;           /* Forzar texto negro */
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  padding: 0.5rem;
+  width: 100%;
+  text-transform: uppercase;
+}
+
+.tableInput::placeholder {
+    text-transform: uppercase;
+}
+
+.tableInput:disabled,
+.tableInput[readOnly] {
+  background-color: #e9ecef !important; /* Forzar fondo gris */
+  color: #000000 !important; /* Forzar texto apagado */
+  cursor: not-allowed;
+  opacity: 1; /* Asegurar que no se vea transparente */
+}
+
+/* Custom styles for the solicitudes table */
+.solicitudesTable th {
+  text-transform: uppercase;
+  text-align: center;
+  font-size: 0.8rem;
+  vertical-align: middle;
+}
+
+.solicitudesTable td {
+  font-size: 0.9rem;
+  vertical-align: middle;
+}
+
+.clickableRow:hover {
+  cursor: pointer;
+  background-color: #f2f2f2;
+}
+
+.pageTitle {
+  font-size: 2rem;
+  font-weight: bold;
+  color: white;
+}
+.filters label,
+.filters .form-control,
+.filters .form-select {
+  text-transform: uppercase;
+  font-size: 0.8rem; 
+}
+
+.filters ::placeholder {
+  text-transform: uppercase;
+  font-size: 0.8rem;
+}

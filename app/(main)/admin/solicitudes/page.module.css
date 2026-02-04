@@ -1,0 +1,526 @@
+/* app/admin/solicitudes/page.module.css */
+
+/* Alarm for urgent requests */
+.alarmContainer {
+  background-color: #ef9a9a; /* A less pink, more red color */
+  border: 2px solid #d32f2f; /* A darker red for the border */
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin: 0 auto 2rem auto;
+  max-width: 900px;
+  box-shadow: 0 4px 12px rgba(255, 0, 0, 0.2);
+  animation: pulse 1.5s infinite;
+}
+
+.alarmHeader h3 {
+  color: #d32f2f; /* Dark red text */
+  margin: 0 0 1rem 0;
+  text-align: center;
+  font-size: 1.5rem;
+  text-transform: uppercase;
+}
+
+.alarmList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.alarmList li {
+  background-color: #ffcdd2; /* Lighter red for items */
+  padding: 0.75rem 1rem;
+  border-radius: 4px;
+  margin-bottom: 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  font-weight: bold;
+}
+
+.alarmList li:hover {
+  background-color: #ef9a9a; /* Match the container background on hover */
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 4px 12px rgba(255, 0, 0, 0.2);
+  }
+  50% {
+    box-shadow: 0 4px 20px rgba(255, 0, 0, 0.4);
+  }
+  100% {
+    box-shadow: 0 4px 12px rgba(255, 0, 0, 0.2);
+  }
+}
+
+.container {
+  width: 100%; /* Ensure it takes full width */
+  padding: 2rem;
+  background-color: #ffffff; /* Keep background for content area */
+  border-radius: 8px; /* Keep border-radius for content area */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* Keep shadow for content area */
+  font-family: 'Arial', sans-serif;
+  color: #333;
+}
+
+.pageTitle {
+  color: #FFFFFF;
+  text-align: center;
+  margin-bottom: 2rem;
+  font-size: 2.5rem;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.solicitudesList {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.solicitudCard {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 1.5rem;
+  background-color: #fdfdfd;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 0.8rem;
+}
+
+.cardHeader h2 {
+  color: #333;
+  font-size: 1.5rem;
+  margin: 0;
+}
+
+.solicitudCard p {
+  margin: 0.5rem 0;
+  font-size: 1rem;
+}
+
+.solicitudCard strong {
+  color: #555;
+}
+
+.toggleButton {
+  background-color: #6c757d;
+  color: white;
+  border: none;
+  padding: 0.6rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  margin-top: 1rem;
+  transition: background-color 0.2s ease;
+}
+
+.toggleButton:hover {
+  background-color: #5a6268;
+}
+
+.detailsSection {
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px dashed #e0e0e0;
+}
+
+.detailsSection h3 {
+  color: #0056b3;
+  margin-bottom: 1rem;
+  font-size: 1.3rem;
+}
+
+.tableWrapper {
+  overflow-x: auto;
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.itemsTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+  table-layout: fixed; /* Add this */
+}
+
+.itemsTable th,
+.itemsTable td {
+  border: 1px solid #dee2e6;
+  padding: 0.8rem;
+  text-align: left;
+  font-size: 0.7rem;
+  word-wrap: break-word;
+  overflow: hidden; /* Added */
+}
+
+.itemsTable th {
+  background-color: #e9ecef;
+  font-weight: bold;
+  color: #495057;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.itemsTable tbody tr:nth-child(even) {
+  background-color: #f8f9fa;
+}
+
+.printButton {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  margin-top: 1.5rem;
+  transition: background-color 0.2s ease;
+}
+
+.printButton:hover {
+  background-color: #218838;
+}
+
+/* Estilos para los estados de la solicitud */
+.status {
+  font-weight: bold;
+  padding: 0.2em 0.6em;
+  border-radius: 0.25rem;
+  color: white;
+}
+
+.status.pendiente {
+  background-color: #ffc107; /* Amarillo */
+}
+
+.status.aprobada {
+  background-color: #28a745; /* Verde */
+}
+
+.status.rechazada {
+  background-color: #dc3545; /* Rojo */
+}
+
+.status.no_conformidad {
+  background-color: #6c757d; /* Gris */
+}
+
+/* Estilos para el modo edición */
+.editSection {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px dashed #e0e0e0;
+  /* Removed flex properties from editSection */
+}
+
+.formGroupsContainer { /* NEW STYLE */
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  align-items: flex-start;
+  margin-bottom: 1.5rem; /* Add some space below the form groups */
+}
+
+.formGroup {
+  flex: 1;
+  min-width: 280px;
+}
+
+.formGroup label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+  color: #555;
+}
+
+.select { /* Solo para select */
+  display: block;
+  max-width: 200px; /* Valor por defecto para select */
+  padding: 0.8rem;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+.select:focus, .textarea:focus {
+  border-color: #007bff;
+  outline: none;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.textarea {
+  display: block; /* Ensure it is a block element */
+  max-width: 500px; /* Set a max-width to prevent it from being too wide */
+  width: 100%; /* Still allow it to be responsive within the max-width */
+  min-height: 50px; /* Smaller initial height */
+  padding: 0.8rem;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  font-size: 1rem;
+  box-sizing: border-box;
+  resize: vertical; /* Allow user to resize vertically */
+}
+
+.button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.2s ease;
+  text-transform: uppercase;
+}
+
+.button:hover {
+  background-color: #0056b3;
+}
+
+.actionButtons {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+  justify-content: flex-start;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .container {
+    margin: 1rem auto;
+    padding: 1rem;
+  }
+
+  .cardHeader {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .cardHeader h2 {
+    margin-bottom: 0.5rem;
+  }
+
+  .toggleButton, .printButton, .button {
+    width: 100%;
+    margin-top: 0.8rem;
+  }
+
+  .actionButtons {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .formGroup {
+    width: 100%; /* Allow form groups to stack on small screens */
+    min-width: auto; /* Remove restrictive min-width */
+  }
+}
+
+/* Estilos para los inputs dentro de la tabla */
+.tableInput {
+  background-color: #ffffff !important; /* Forzar fondo blanco */
+  color: #000000 !important;           /* Forzar texto negro */
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  padding: 0.5rem;
+  width: 100%; /* Added */
+  box-sizing: border-box; /* Ensure padding and border are included in the element's total width and height */
+}
+
+.tableInput:disabled,
+.tableInput[readOnly] {
+  background-color: #e9ecef !important; /* Forzar fondo gris */
+  color: #000000 !important; /* Forzar texto apagado */
+  cursor: not-allowed;
+  opacity: 1; /* Asegurar que no se vea transparente */
+}
+
+/* Styles for filter bar */
+.filtersContainer {
+  background-color: #f8f9fa; /* Light background for filters */
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.filterInput {
+  padding: 0.6rem 1rem;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  background-color: #ffffff; /* Ensure white background */
+  color: #000000; /* Ensure black text for visibility */
+  flex: 1; /* Allow inputs to grow */
+  min-width: 150px; /* Minimum width for inputs */
+}
+
+.filterInput:focus {
+  border-color: #80bdff;
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.printableArea {
+  display: none;
+}
+
+@media print {
+  .nonPrintable {
+    display: none !important;
+  }
+
+  .printableArea {
+    display: block !important;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw; /* Use viewport width */
+    height: 100vh; /* Use viewport height */
+    z-index: 9999;
+    background: white;
+    padding: 0.5em; /* Add some padding */
+    color: #000; /* Ensure text is black for printing */
+    page-break-inside: avoid;
+  }
+
+  /* --- STYLING FOR THE PRINTABLE AREA --- */
+
+  .printHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #000;
+    padding-bottom: 10px;
+  }
+
+  .printHeaderLeft { flex: 1; }
+  .printHeaderLeft img { max-width: 150px; }
+  .printHeaderCenter { flex: 2; text-align: center; }
+  .printTitle { margin: 0; font-size: 1.5rem; font-weight: bold; }
+  .printHeaderRight { flex: 1; text-align: right; }
+  .printHeaderRight p { margin: 0; }
+
+  .printDetails { margin-bottom: 20px; }
+  .printDetails p { margin: 5px 0; }
+
+  .printTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    page-break-inside: auto;
+  }
+
+  .printTable th,
+  .printTable td {
+    border: 1px solid #000 !important; /* IMPORTANT: Black borders */
+    padding: 8px;
+    text-align: left;
+  }
+  
+  .printTable th {
+    background-color: #f2f2f2;
+    text-transform: uppercase;
+    font-size: 10px;
+  }
+
+  .printTable tr {
+    page-break-inside: avoid;
+    page-break-after: auto;
+  }
+
+  .printNotes { 
+    margin-top: 20px; 
+    page-break-inside: avoid;
+  }
+  .printNotes h3 { 
+    margin-bottom: 10px; 
+    font-size: 12px;
+  }
+}
+
+.itemsTable th:nth-child(1),
+.itemsTable td:nth-child(1) {
+  width: 100px;
+  min-width: 100px;
+  max-width: 100px;
+}
+
+.itemsTable th:nth-child(3),
+.itemsTable td:nth-child(3) {
+  width: 90px;
+  min-width: 90px;
+  max-width: 90px;
+}
+
+.itemsTable th:nth-child(5),
+.itemsTable td:nth-child(5),
+.itemsTable th:nth-child(6),
+.itemsTable td:nth-child(6),
+.itemsTable th:nth-child(7),
+.itemsTable td:nth-child(7) {
+  width: 120px;
+  min-width: 120px;
+  max-width: 120px;
+}
+
+.clickableAlert {
+  cursor: pointer;
+}
+
+.clickableAlert:hover {
+  background-color: #f8d7da; /* A slightly darker shade on hover */
+}
+
+.urgentRow {
+  background-color: #fff3cd !important; /* A light yellow to draw attention */
+}
+
+/* Custom styles for the admin solicitudes table */
+.solicitudesTable th {
+  text-transform: uppercase;
+  text-align: center;
+  font-size: 0.8rem;
+  vertical-align: middle;
+}
+
+.solicitudesTable td {
+  font-size: 0.9rem;
+  vertical-align: middle;
+}
+
+.clickableRow:hover {
+  cursor: pointer;
+  background-color: #f2f2f2;
+}
+
+
+
+.filters label,
+.filters .form-control,
+.filters .form-select {
+  text-transform: uppercase;
+  font-size: 0.8rem; 
+}
+
+.filters ::placeholder {
+  text-transform: uppercase;
+  font-size: 0.8rem;
+}
+
+.noWrapCell {
+  white-space: nowrap;
+}

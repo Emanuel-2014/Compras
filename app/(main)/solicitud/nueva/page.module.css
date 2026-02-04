@@ -1,0 +1,435 @@
+/* app/solicitud/nueva/page.module.css */
+
+.container {
+  width: 100%;
+  padding: 2rem;
+  background-color: #f0f0f0;
+  border-radius: 8px;
+  font-family: 'Arial', sans-serif;
+  color: #333;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid #eee;
+}
+
+.header h1 {
+  color: #333;
+  font-size: 2.2rem;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+}
+
+.companyInfo p {
+  margin: 0.2rem 0;
+  font-size: 0.9rem;
+}
+
+.requestInfo {
+  background-color: #fff;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.requestInfo p {
+  margin: 0.5rem 1rem;
+  font-size: 1rem;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.fieldset {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  background-color: #fff;
+}
+
+.fieldset legend {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #333;
+  padding: 0 0.5rem;
+}
+
+.formGroup {
+  margin-bottom: 1rem;
+}
+
+.formGroup label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+  color: #555;
+}
+
+.input,
+.select,
+.textarea {
+  width: 100%;
+  padding: 0.8rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+  box-sizing: border-box;
+  background-color: #fff;
+  color: #333;
+}
+
+.input:focus,
+.select:focus,
+.textarea:focus {
+  border-color: var(--primary-color);
+  outline: none;
+  box-shadow: 0 0 0 0.2rem rgba(108, 117, 125, 0.25);
+}
+
+.textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.newProveedorForm {
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px dashed #ccc;
+}
+
+.newProveedorForm h3 {
+  color: #333;
+  margin-bottom: 1rem;
+  font-weight: bold;
+}
+
+.itemForm {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: flex-end;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px dashed #ccc;
+}
+
+.itemForm .formGroup {
+  flex: 1 1 auto;
+  min-width: 150px;
+  margin-bottom: 0;
+}
+
+.itemForm .formGroup.prioridad {
+  min-width: 120px;
+  flex-grow: 0;
+}
+
+.itemForm .formGroup.cantidad {
+  min-width: 80px;
+  flex-grow: 0;
+}
+
+.itemForm .formGroup.cantidad .input {
+  width: 80% !important;
+}
+
+.itemForm .formGroup.descripcion {
+  flex-grow: 2;
+}
+
+.itemForm .formGroup.especificaciones {
+  flex-grow: 1;
+}
+
+.itemForm .formGroup.observaciones {
+  flex-grow: 1;
+}
+
+.itemForm button {
+  flex-shrink: 0;
+  margin-top: 1rem;
+}
+
+.itemsList h3 {
+  color: #333;
+  margin-bottom: 1rem;
+  font-weight: bold;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+.table th,
+.table td {
+  border: 1px solid #ddd;
+  padding: 0.8rem;
+}
+
+.table th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+  text-align: center;
+  font-size: 0.8rem; /* Smaller font size for headers */
+}
+
+.table tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.prioridadColumn {
+  text-transform: uppercase;
+}
+
+.cantidadColumn {
+  width: 80px;
+  text-align: center;
+}
+
+.buttonGroup {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.actionButton {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 0.4rem 0.7rem; /* Smaller padding */
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.75rem; /* Smaller font size */
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.actionButton:hover {
+  opacity: 0.85;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.deleteButton {
+  background-color: var(--danger-color);
+  color: white;
+  border: none;
+  padding: 0.4rem 0.7rem; /* Smaller padding to match actionButton */
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.75rem; /* Smaller font size to match actionButton */
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.deleteButton:hover {
+  opacity: 0.85;
+  box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
+}
+
+.button {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 0.9rem 1.5rem;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: bold;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.button:hover {
+  opacity: 0.85;
+  box-shadow: 0 0 0 0.2rem rgba(108, 117, 125, 0.5);
+}
+
+.button:disabled {
+  background-color: var(--secondary-color);
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.actionButtons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1050;
+}
+
+.modalContent {
+  background-color: #fff;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  width: 100%;
+  max-width: 500px;
+}
+
+.modalContent h3 {
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+  color: #333;
+  font-weight: bold;
+}
+
+.modalActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.buttonSecondary {
+  background-color: var(--secondary-color);
+}
+
+.buttonSecondary:hover {
+  opacity: 0.85;
+}
+
+.tableWrapper {
+  overflow-x: auto;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+  }
+
+  .requestInfo {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .itemForm {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .itemForm .formGroup {
+    min-width: unset;
+    width: 100%;
+  }
+
+  .actionButtons {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .actionButton,
+  .button {
+    width: 100%;
+    margin-right: 0;
+    margin-bottom: 0.5rem;
+  }
+}
+
+.printableArea {
+  display: none;
+}
+
+@media print {
+  .nonPrintable {
+    display: none !important;
+  }
+
+  .printableArea {
+    display: block !important;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw; /* Use viewport width */
+    height: 100vh; /* Use viewport height */
+    z-index: 9999;
+    background: white;
+    padding: 1em; /* Add some padding */
+  }
+
+  /* --- STYLING FOR THE PRINTABLE AREA --- */
+
+  .printHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #000;
+    padding-bottom: 10px;
+  }
+
+  .printHeaderLeft { flex: 1; }
+  .printHeaderLeft img { max-width: 100px; }
+  .printHeaderCenter { flex: 2; text-align: center; }
+  .printTitle { margin: 0; font-size: 1.5rem; font-weight: bold; }
+  .printHeaderRight { flex: 1; text-align: right; }
+  .printHeaderRight p { margin: 0; }
+
+  .printDetails { margin-bottom: 20px; }
+  .printDetails p { margin: 5px 0; }
+
+  .printTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+
+  .printTable th,
+  .printTable td {
+    border: 1px solid #000 !important; /* IMPORTANT: Black borders */
+    padding: 8px;
+    text-align: left;
+  }
+
+  .printTable th {
+    background-color: #f2f2f2;
+  }
+
+  .printNotes { margin-top: 20px; }
+}
+
+.buttonRed {
+  background-color: var(--danger-color);
+}
+
+.buttonRed:hover {
+  opacity: 0.85;
+}
+
+/* Mejorar contraste de placeholders */
+.container :global(input::placeholder),
+.container :global(textarea::placeholder),
+.container :global(select::placeholder) {
+  color: var(--secondary-color) !important;
+  opacity: 1 !important;
+  font-weight: 500 !important;
+}
+
+.container :global(input:focus::placeholder),
+.container :global(textarea:focus::placeholder) {
+  color: #adb5bd !important;
+}

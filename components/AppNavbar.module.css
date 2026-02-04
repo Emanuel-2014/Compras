@@ -1,0 +1,207 @@
+/* components/AppNavbar.module.css */
+.loadingContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 1rem;
+  background-color: var(--sidebar-background);
+  color: var(--sidebar-text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1030; /* Above other content */
+}
+.logoutButton {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  background-color: var(--danger-color);
+  color: white;
+  border: none;
+  border-radius: 50%; /* Circular button */
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 1.2rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.2s ease, transform 0.2s ease;
+  z-index: 1000; /* Ensure it's above content */
+}
+.logoutButton:hover {
+  opacity: 0.85;
+  transform: scale(1.05);
+}
+.mobileMenuButton {
+  display: none; /* Hidden by default on desktop */
+}
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 250px; /* Width of the sidebar */
+  height: 100vh; /* Full viewport height */
+  background-color: var(--sidebar-background);
+  color: var(--sidebar-text);
+  padding: 1rem; /* Adjusted padding */
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  z-index: 1000; /* Ensure it's above content */
+  /* Asegurar fondo sólido en todas las plataformas */
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+.sidebarHeader {
+  text-align: center;
+  margin-bottom: 0.5rem; /* Reduced margin */
+  padding-bottom: 0.25rem; /* Reduced padding */
+}
+.logo {
+  width: 100%;
+  height: auto;
+  margin-bottom: 0.20rem; /* Reduced margin */
+}
+.userInfo {
+  font-size: 0.9rem;
+  color: var(--sidebar-text);
+  opacity: 0.7;
+  margin: 0;
+}
+.userName {
+  font-weight: bold;
+  color: var(--sidebar-text);
+  text-transform: uppercase;
+}
+.userRole {
+  font-style: italic;
+  text-transform: uppercase;
+}
+.navbarNav {
+  flex-grow: 0.5; /* Allows navigation to take available space */
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem; /* Reducido el espacio entre los enlaces */
+  overflow-y: auto; /* Allow scrolling if content overflows */
+}
+.navLink {
+  display: flex;
+  align-items: center;
+  padding: 0.6rem 0.8rem; /* Reducido el padding horizontal */
+  color: var(--sidebar-text);
+  opacity: 0.7;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  text-transform: uppercase;
+  font-size: 0.85rem; /* Reducido el tamaño de la fuente */
+  white-space: nowrap; /* Evita que el texto se divida en varias líneas */
+}
+.navLink:hover,
+.navLink.active { /* Add .active class for current page */
+  background-color: rgba(255, 255, 255, 0.1);
+  color: var(--sidebar-text);
+  opacity: 1;
+}
+.navIcon {
+  margin-right: 0.7rem; /* Reducido el margen */
+  font-size: 1rem; /* Icono ligeramente más pequeño */
+}
+.adminSectionHeader {
+  color: var(--sidebar-text);
+  opacity: 0.8;
+  font-size: 0.8rem;
+  font-weight: bold;
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+  padding-left: 1rem;
+  text-transform: uppercase;
+}
+
+.superAdminHeader {
+  color: #ffd700;
+  opacity: 1;
+  font-weight: 800;
+  border-top: 2px solid rgba(255, 215, 0, 0.3);
+  padding-top: 1rem;
+}
+
+.superAdminLink {
+  background-color: rgba(255, 215, 0, 0.1);
+  border-left: 3px solid #ffd700;
+}
+
+.superAdminLink:hover {
+  background-color: rgba(255, 215, 0, 0.2);
+  border-left-color: #ffed4e;
+}
+.logoutNavLink {
+  background-color: var(--danger-color);
+  color: white;
+  font-weight: bold;
+  opacity: 0.9;
+}
+.logoutNavLink:hover {
+  opacity: 1;
+}
+.logoutNavLink span {
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 250px; /* Fixed width for mobile sidebar */
+    transform: translateX(-100%); /* Hide by default */
+    transition: transform 0.3s ease-in-out;
+    /* Asegurar fondo sólido en móviles */
+    background-color: #2d3748 !important;
+    opacity: 1 !important;
+  }
+  .sidebar.open {
+    transform: translateX(0); /* Show when open */
+    background-color: #2d3748 !important;
+  }
+  .logoutButton {
+    display: none; /* Hide desktop logout button on mobile */
+  }
+  .mobileMenuButton {
+    display: flex; /* Show mobile menu button */
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 1.2rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.2s ease, transform 0.2s ease;
+    z-index: 1001;
+  }
+  .mobileMenuButton:hover {
+    background-color: var(--primary-color-dark);
+    transform: scale(1.05);
+  }
+}
+.footerText {
+    font-size: 0.8rem;
+    text-align: center;
+    margin-top: 1rem;
+    color: #a0aec0;
+}
+.companyName {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: var(--sidebar-text);
+  margin-top: 0.5rem;
+  text-transform: uppercase;
+}
