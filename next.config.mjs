@@ -23,7 +23,7 @@ const nextConfig = {
       },
     ],
   },
-  serverExternalPackages: ['better-sqlite3-multiple-ciphers'],
+  // serverExternalPackages: ['better-sqlite3-multiple-ciphers'],
 };
 
 export default nextConfig;
