@@ -41,6 +41,7 @@
     "jsonwebtoken": "^9.0.2",
     "jspdf": "^4.0.0",
     "next": "^16.1.6",
+    "pg": "^8.18.0",
     "puppeteer": "^24.31.0",
     "react": "19.1.0",
     "react-bootstrap": "^2.10.10",

@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: solicitud-compras
+    env: docker
+    region: oregon
+    plan: free
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: JWT_SECRET
+        generateValue: true
+      - key: DATABASE_PATH
+        value: /var/data/solicitud_compras.db
+      - key: PORT
+        value: 3000
