@@ -59,24 +59,12 @@ export async function POST(request, { params }) {
         return; // Termina la transacción para el admin
       }
 
-      // 1. Verificar si es el turno del aprobador actual
-      // Buscar si hay alguna aprobación pendiente para este aprobador específico
-      const userApprovalStmt = db.prepare(`
-        SELECT id, aprobador_id, orden
-        FROM solicitud_aprobaciones
-        WHERE solicitud_id = ?
-          AND aprobador_id = ?
-          AND estado = 'pendiente'
-        LIMIT 1
-      `);
-      const userApproval = userApprovalStmt.get(id, approverId);
+      import { NextResponse } from 'next/server';
+      import { getSession } from '@/lib/auth';
+      import db from '@/lib/db';
 
-      if (!userApproval) {
-        throw new Error('No tiene una aprobación pendiente para esta solicitud o no es su turno.');
-      }
+      // Removed ALTER TABLE statements as they are not needed in PostgreSQL
 
-      // Verificar que no haya aprobaciones pendientes de orden inferior
-      const previousPendingStmt = db.prepare(`
         SELECT COUNT(*) as count
         FROM solicitud_aprobaciones
         WHERE solicitud_id = ?
