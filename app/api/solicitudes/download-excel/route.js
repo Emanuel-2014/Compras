@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import db from '@/lib/db';
+import pool from '@/lib/db';
 import ExcelJS from 'exceljs';
 import { verifySessionToken } from '@/lib/auth';
 import { parse } from 'cookie';
@@ -58,25 +58,25 @@ export async function GET(request) {
     const params = [];
 
     if (usuarioIdFilter) {
-      query += ' AND u.id = ?';
+      query += ' AND u.id = $' + (params.length + 1);
       params.push(parseInt(usuarioIdFilter));
     }
     if (dependenciaFilter) {
-      query += ' AND u.dependencia LIKE ?';
+      query += ' AND u.dependencia LIKE $' + (params.length + 1);
       params.push(`%${dependenciaFilter}%`);
     }
     if (faltanteFilter) {
       if (faltanteFilter === 'true') {
-        query += ' AND si.estado_recepcion IN (\'pendiente\', \'no_recibido\' )';
+        query += ` AND si.estado_recepcion IN ('pendiente', 'no_recibido')`;
       } else if (faltanteFilter === 'false') {
-        query += ' AND si.estado_recepcion NOT IN (\'pendiente\', \'no_recibido\' )';
+        query += ` AND si.estado_recepcion NOT IN ('pendiente', 'no_recibido')`;
       }
     }
 
     query += ' ORDER BY s.solicitud_id, si.id';
 
-    const stmt = db.prepare(query);
-    const data = stmt.all(params);
+    const dataRes = await pool.query(query, params);
+    const data = dataRes.rows;
 
     const workbook = new ExcelJS.Workbook();
     const worksheet = workbook.addWorksheet('Solicitudes y Items');

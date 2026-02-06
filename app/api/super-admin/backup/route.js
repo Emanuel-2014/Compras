@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { getSession } from '@/lib/auth';
-import { createBackup, listBackups, deleteBackup, restoreBackup, getDatabaseInfo, cleanOldBackups } from '@/lib/backup';
+import { listBackups, deleteBackup, restoreBackup, getDatabaseInfo, cleanOldBackups } from '@/lib/backup';
 import { logAudit } from '@/lib/audit';
 import fs from 'fs';
 import path from 'path';
@@ -121,19 +121,8 @@ export async function POST(request) {
     }
 
     // Crear backup
-    const result = createBackup(description, auth.user.id, auth.user.nombre);
-    
-    if (result.success) {
-      logAudit({
-        userId: auth.user.id,
-        userName: auth.user.nombre,
-        action: 'CREATE',
-        entityType: 'BACKUP',
-        details: `Backup creado: ${result.filename}. Tamaño: ${(result.size / 1024 / 1024).toFixed(2)} MB. Descripción: ${description || 'Sin descripción'}`
-      });
-    }
 
-    return NextResponse.json(result, { status: result.success ? 201 : 500 });
+    return NextResponse.json({ success: false, message: 'Función no implementada' }, { status: 501 });
 
   } catch (error) {
     console.error('Error en POST /api/super-admin/backup:', error);

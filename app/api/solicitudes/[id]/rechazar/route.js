@@ -3,7 +3,7 @@
 import { NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
 import { verifySessionToken } from '@/lib/auth';
-import db from '@/lib/db';
+import pool from '@/lib/db';
 
 export async function POST(req, { params }) {
   const { id } = await params; // id de la solicitud
@@ -28,48 +28,46 @@ export async function POST(req, { params }) {
       return NextResponse.json({ message: 'No autorizado para rechazar.' }, { status: 403 });
     }
 
-    // 3. Lógica de rechazo en una transacción
-    const transaction = db.transaction(() => {
+    // 3. Lógica de rechazo en una transacción PostgreSQL
+    await pool.query('BEGIN');
+    try {
       if (user.rol?.toLowerCase() === 'administrador') {
-        // Admin Override: Reject the whole request
-        const result = db.prepare(
-          'UPDATE solicitudes SET estado = \'rechazada\', rechazo_comentario = ? WHERE solicitud_id = ?'
-        ).run(upperComentario, id);
-
-        if (result.changes === 0) {
+        const result = await pool.query(
+          'UPDATE solicitudes SET estado = $1, rechazo_comentario = $2 WHERE solicitud_id = $3',
+          ['rechazada', upperComentario, id]
+        );
+        if (result.rowCount === 0) {
+          await pool.query('ROLLBACK');
           throw new Error('La solicitud no fue encontrada.');
         }
-
-      } else { // User is 'aprobador'
-        const aprobacionStmt = db.prepare (
-          `SELECT id FROM solicitud_aprobaciones WHERE solicitud_id = ? AND aprobador_id = ? AND estado = 'pendiente'`
+      } else {
+        const aprobacionRes = await pool.query(
+          'SELECT id FROM solicitud_aprobaciones WHERE solicitud_id = $1 AND aprobador_id = $2 AND estado = $3',
+          [id, user.id, 'pendiente']
         );
-        const aprobacion = aprobacionStmt.get(id, user.id);
-
+        const aprobacion = aprobacionRes.rows[0];
         if (!aprobacion) {
+          await pool.query('ROLLBACK');
           throw new Error('No tiene permiso para rechazar esta solicitud o ya ha sido procesada.');
         }
-
-        // Update their specific approval to 'rechazado'
-        db.prepare (`
-          UPDATE solicitud_aprobaciones
-          SET estado = 'rechazado', fecha_decision = datetime('now'), comentario = ?
-          WHERE id = ?
-        `).run(upperComentario, aprobacion.id);
-
-        // Update the main request to 'rechazada'
-        db.prepare(
-          'UPDATE solicitudes SET estado = \'rechazada\', rechazo_comentario = ? WHERE solicitud_id = ?'
-        ).run(upperComentario, id);
+        await pool.query(
+          `UPDATE solicitud_aprobaciones SET estado = $1, fecha_decision = CURRENT_TIMESTAMP, comentario = $2 WHERE id = $3`,
+          ['rechazado', upperComentario, aprobacion.id]
+        );
+        await pool.query(
+          'UPDATE solicitudes SET estado = $1, rechazo_comentario = $2 WHERE solicitud_id = $3',
+          ['rechazada', upperComentario, id]
+        );
       }
-    });
-
-    transaction();
-
-    return NextResponse.json(
-      { message: `Solicitud ${id} ha sido rechazada.` },
-      { status: 200 }
-    );
+      await pool.query('COMMIT');
+      return NextResponse.json(
+        { message: `Solicitud ${id} ha sido rechazada.` },
+        { status: 200 }
+      );
+    } catch (error) {
+      await pool.query('ROLLBACK');
+      throw error;
+    }
 
   } catch (error) {
     console.error(`Error al rechazar la solicitud ${id}:`, error);

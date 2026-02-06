@@ -1,6 +1,6 @@
 // app/api/solicitudes/pendientes/route.js
 import { NextResponse } from 'next/server';
-import db from '@/lib/db';
+import pool from '@/lib/db';
 import { verifySessionToken } from '@/lib/auth';
 
 export async function GET(req) {
@@ -20,38 +20,27 @@ export async function GET(req) {
     const userId = session.id;
 
     // 2. Obtener las solicitudes pendientes para el usuario donde es su turno de aprobar.
-    const stmt = db.prepare(`
+    const pendingApprovalsRes = await pool.query(`
       SELECT s.*, u.nombre as nombre_solicitante, p.nombre as nombre_proveedor
       FROM solicitudes s
       JOIN solicitud_aprobaciones sa ON s.solicitud_id = sa.solicitud_id
       JOIN usuarios u ON s.id_usuario = u.id
       JOIN proveedores p ON s.id_proveedor = p.id
-      WHERE sa.aprobador_id = ? 
+      WHERE sa.aprobador_id = $1 
         AND sa.estado = 'pendiente'
       ORDER BY s.fecha_solicitud DESC
-    `);
-    
-    const pendingApprovals = stmt.all(userId);
+    `, [userId]);
+    const pendingApprovals = pendingApprovalsRes.rows;
 
     const solicitudesConItems = [];
-    const stmtItems = db.prepare(`
-      SELECT
-        id,
-        id_solicitud,
-        necesidad,
-        descripcion,
-        especificaciones,
-        cantidad,
-        observaciones
-      FROM solicitud_items
-      WHERE id_solicitud = ?
-    `);
-
     for (const solicitud of pendingApprovals) {
-      const items = stmtItems.all(solicitud.solicitud_id);
-      solicitudesConItems.push({ ...solicitud, items });
+      const itemsRes = await pool.query(`
+        SELECT id, id_solicitud, necesidad, descripcion, especificaciones, cantidad, observaciones
+        FROM solicitud_items
+        WHERE id_solicitud = $1
+      `, [solicitud.solicitud_id]);
+      solicitudesConItems.push({ ...solicitud, items: itemsRes.rows });
     }
-
     return NextResponse.json(solicitudesConItems, { status: 200 });
 
   } catch (error) {

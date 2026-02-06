@@ -2,7 +2,7 @@
 import { NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
 import { verifySessionToken } from '@/lib/auth';
-import db from '@/lib/db';
+import pool from '@/lib/db';
 
 export async function POST(req, { params }) {
   const { id } = await params; // id de la solicitud
@@ -21,13 +21,10 @@ export async function POST(req, { params }) {
     }
 
     // 2. Lógica de cambio de estado
-    const stmt = db.prepare('UPDATE solicitudes SET estado = ? WHERE solicitud_id = ?');
-    const result = stmt.run('pendiente', id);
-
-    if (result.changes === 0) {
+    const result = await pool.query('UPDATE solicitudes SET estado = $1 WHERE solicitud_id = $2', ['pendiente', id]);
+    if (result.rowCount === 0) {
       return NextResponse.json({ message: 'No se encontró la solicitud o no se pudo actualizar.' }, { status: 404 });
     }
-
     return NextResponse.json({ message: `Solicitud ${id} marcada como 'pendiente'.` }, { status: 200 });
 
   } catch (error) {

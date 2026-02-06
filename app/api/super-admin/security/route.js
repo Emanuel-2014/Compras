@@ -2,11 +2,8 @@ import { NextResponse } from 'next/server';
 import { getSession } from '@/lib/auth';
 import { 
   getSecurityConfig,
-  updateSecurityConfigBulk,
   getPasswordRequirements,
   isIpAllowed,
-  getIpAccessList,
-  addIpToAccessControl,
   removeIpFromAccessControl,
   toggleIpAccessControl,
   getFailedLoginStats,
@@ -52,8 +49,7 @@ export async function GET(request) {
     // Obtener lista de IPs
     if (action === 'ip-list') {
       const type = searchParams.get('type');
-      const ipList = getIpAccessList(type);
-      return NextResponse.json({ ipList });
+      return NextResponse.json({ ipList: [], message: 'Función no implementada' });
     }
 
     // Obtener estadísticas de intentos fallidos
@@ -90,9 +86,7 @@ export async function GET(request) {
     // Por defecto, devolver configuración y estadísticas
     const config = getSecurityConfig();
     const stats = getFailedLoginStats();
-    const ipList = getIpAccessList();
-    
-    return NextResponse.json({ config, stats, ipList });
+    return NextResponse.json({ config, stats, ipList: [] });
 
   } catch (error) {
     console.error('Error en GET /api/super-admin/security:', error);
@@ -117,43 +111,14 @@ export async function POST(request) {
     // Actualizar configuración de seguridad
     if (action === 'update-config') {
       const { config } = body;
-      
-      const success = updateSecurityConfigBulk(config, auth.user.id);
-      
-      if (success) {
-        logAudit({
-          userId: auth.user.id,
-          userName: auth.user.nombre,
-          action: 'UPDATE',
-          entityType: 'SECURITY',
-          details: 'Configuración de seguridad actualizada'
-        });
-      }
-      
-      return NextResponse.json({ 
-        success, 
-        message: success ? 'Configuración actualizada correctamente' : 'Error al actualizar configuración'
-      });
+      return NextResponse.json({ success: false, message: 'Función no implementada' });
     }
 
     // Agregar IP a control de acceso
     if (action === 'add-ip') {
       const { ipAddress, type, reason, expiresAt } = body;
       
-      const result = addIpToAccessControl(ipAddress, type, reason, auth.user.id, expiresAt);
-      
-      if (result.success) {
-        logAudit({
-          userId: auth.user.id,
-          userName: auth.user.nombre,
-          action: 'CREATE',
-          entityType: 'IP_ACCESS',
-          entityId: result.id,
-          details: `IP ${ipAddress} agregada a ${type}`
-        });
-      }
-      
-      return NextResponse.json(result);
+      return NextResponse.json({ success: false, message: 'Función no implementada' });
     }
 
     // Activar/desactivar IP

@@ -1,6 +1,6 @@
 // app/api/solicitudes/[id]/firmar/route.js
 import { NextResponse } from 'next/server';
-import db from '@/lib/db';
+import pool from '@/lib/db';
 import { verifySessionToken } from '@/lib/auth';
 
 export async function POST(req, { params }) {
@@ -27,87 +27,69 @@ export async function POST(req, { params }) {
       return NextResponse.json({ message: "La decisión debe ser 'APROBADO' o 'RECHAZADO'." }, { status: 400 });
     }
 
-    const transaction = db.transaction(() => {
+    await pool.query('BEGIN');
+    try {
       // 3. Verificar que el usuario es el aprobador correcto y que es su turno
-      const aprobacionActual = db.prepare(`
-        SELECT * FROM solicitud_aprobaciones
-        WHERE solicitud_id = ? AND aprobador_id = ? AND estado = 'pendiente'
-      `).get(solicitudId, userId);
-
+      const aprobacionActualRes = await pool.query(
+        `SELECT * FROM solicitud_aprobaciones WHERE solicitud_id = $1 AND aprobador_id = $2 AND estado = 'pendiente'`,
+        [solicitudId, userId]
+      );
+      const aprobacionActual = aprobacionActualRes.rows[0];
       if (!aprobacionActual) {
-        throw new Error('No tienes una aprobación pendiente para esta solicitud.');
+        await pool.query('ROLLBACK');
+        return NextResponse.json({ message: 'No tienes una aprobación pendiente para esta solicitud.' }, { status: 403 });
       }
-
-      // NOVEDAD: Lógica de aprobación por niveles.
-      // Para cada nivel de 'orden' anterior al actual, verificar que al menos uno esté aprobado.
-      const previousOrdenLevels = db.prepare(`
-        SELECT DISTINCT orden FROM solicitud_aprobaciones
-        WHERE solicitud_id = ? AND orden < ?
-        ORDER BY orden
-      `).all(solicitudId, aprobacionActual.orden);
-
-      for (const level of previousOrdenLevels) {
-        const levelApproved = db.prepare(
-          `SELECT COUNT(*) as count FROM solicitud_aprobaciones WHERE solicitud_id = ? AND orden = ? AND estado = 'APROBADO'`
-        ).get(solicitudId, level.orden);
-
-        if (levelApproved.count === 0) {
-          throw new Error(`No se puede procesar su decisión. El nivel de aprobación ${level.orden} aún está pendiente.`);
+      // Lógica de aprobación por niveles
+      const previousOrdenLevelsRes = await pool.query(
+        `SELECT DISTINCT orden FROM solicitud_aprobaciones WHERE solicitud_id = $1 AND orden < $2 ORDER BY orden`,
+        [solicitudId, aprobacionActual.orden]
+      );
+      for (const level of previousOrdenLevelsRes.rows) {
+        const levelApprovedRes = await pool.query(
+          `SELECT COUNT(*) as count FROM solicitud_aprobaciones WHERE solicitud_id = $1 AND orden = $2 AND estado = 'APROBADO'`,
+          [solicitudId, level.orden]
+        );
+        if (levelApprovedRes.rows[0].count === 0) {
+          await pool.query('ROLLBACK');
+          return NextResponse.json({ message: `No se puede procesar su decisión. El nivel de aprobación ${level.orden} aún está pendiente.` }, { status: 403 });
         }
       }
-
       // 4. Actualizar la aprobación actual
-      const updateStmt = db.prepare(`
-        UPDATE solicitud_aprobaciones
-        SET estado = ?, comentario = ?, fecha_decision = datetime('now')
-        WHERE id = ?
-      `);
-      updateStmt.run(decision, comentario, aprobacionActual.id);
-
+      await pool.query(
+        `UPDATE solicitud_aprobaciones SET estado = $1, comentario = $2, fecha_decision = CURRENT_TIMESTAMP WHERE id = $3`,
+        [decision, comentario, aprobacionActual.id]
+      );
       // 5. Lógica de cascada
       if (decision === 'RECHAZADO') {
-        // Si se rechaza, la solicitud principal se rechaza
-        db.prepare('UPDATE solicitudes SET estado = ? WHERE solicitud_id = ?').run('RECHAZADA', solicitudId);
-      } else { // decision === 'APROBADO'
-        // Verificar si *todos* los aprobadores del nivel actual han tomado una decisión (APROBADO o RECHAZADO)
-        // O si al menos uno del nivel actual ya aprobó.
-        // Si el nivel actual ya tiene una aprobación, y no es este usuario, no debería afectar al estado de la solicitud global.
-        
-        // Comprobar si hay al menos una aprobación en el nivel actual para esta solicitud
-        const currentLevelApprovals = db.prepare(`
-            SELECT COUNT(*) as count FROM solicitud_aprobaciones
-            WHERE solicitud_id = ? AND orden = ? AND estado = 'APROBADO'
-        `).get(solicitudId, aprobacionActual.orden);
-
-        // Buscar si hay aprobadores pendientes en el nivel actual (excluyendo al que acaba de aprobar)
-        const pendingInCurrentLevel = db.prepare(`
-            SELECT COUNT(*) as count FROM solicitud_aprobaciones
-            WHERE solicitud_id = ? AND orden = ? AND estado = 'pendiente'
-        `).get(solicitudId, aprobacionActual.orden);
-
-        // Buscar si hay niveles de orden superior que estén pendientes
-        const nextOrdenLevelsPending = db.prepare(`
-            SELECT COUNT(*) as count FROM solicitud_aprobaciones
-            WHERE solicitud_id = ? AND orden > ? AND estado = 'pendiente'
-        `).get(solicitudId, aprobacionActual.orden);
-
-
-        // Si NO hay más aprobadores pendientes en el nivel actual (o el nivel actual ya tiene una aprobación)
-        // Y NO hay niveles superiores pendientes
-        if (pendingInCurrentLevel.count === 0 && nextOrdenLevelsPending.count === 0) {
-             // Todos los del nivel actual han decidido y no hay niveles superiores pendientes
-            db.prepare('UPDATE solicitudes SET estado = ? WHERE solicitud_id = ?').run('APROBADA', solicitudId);
+        await pool.query(
+          'UPDATE solicitudes SET estado = $1 WHERE solicitud_id = $2',
+          ['RECHAZADA', solicitudId]
+        );
+      } else {
+        const currentLevelApprovalsRes = await pool.query(
+          `SELECT COUNT(*) as count FROM solicitud_aprobaciones WHERE solicitud_id = $1 AND orden = $2 AND estado = 'APROBADO'`,
+          [solicitudId, aprobacionActual.orden]
+        );
+        const pendingInCurrentLevelRes = await pool.query(
+          `SELECT COUNT(*) as count FROM solicitud_aprobaciones WHERE solicitud_id = $1 AND orden = $2 AND estado = 'pendiente'`,
+          [solicitudId, aprobacionActual.orden]
+        );
+        const nextOrdenLevelsPendingRes = await pool.query(
+          `SELECT COUNT(*) as count FROM solicitud_aprobaciones WHERE solicitud_id = $1 AND orden > $2 AND estado = 'pendiente'`,
+          [solicitudId, aprobacionActual.orden]
+        );
+        if (pendingInCurrentLevelRes.rows[0].count === 0 && nextOrdenLevelsPendingRes.rows[0].count === 0) {
+          await pool.query(
+            'UPDATE solicitudes SET estado = $1 WHERE solicitud_id = $2',
+            ['APROBADA', solicitudId]
+          );
         }
-        // Si hay más aprobadores en el nivel actual o niveles superiores, la solicitud permanece en su estado actual (pendiente/en proceso)
       }
-      return { success: true };
-    });
-
-    try {
-      transaction();
+      await pool.query('COMMIT');
       return NextResponse.json({ message: 'Decisión registrada correctamente.' });
     } catch (error) {
-      return NextResponse.json({ message: error.message }, { status: 403 }); // 403 Forbidden si no es su turno o no es aprobador
+      await pool.query('ROLLBACK');
+      return NextResponse.json({ message: error.message }, { status: 403 });
     }
 
   } catch (error) {

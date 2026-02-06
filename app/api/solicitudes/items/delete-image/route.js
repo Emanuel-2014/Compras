@@ -2,7 +2,7 @@
 import { NextResponse } from 'next/server';
 import { unlink } from 'fs/promises';
 import path from 'path';
-import db from '@/lib/db';
+import pool from '@/lib/db';
 import { getSession } from '@/lib/auth';
 
 export async function POST(request) {
@@ -19,25 +19,20 @@ export async function POST(request) {
       return NextResponse.json({ message: 'Falta el ID del ítem.' }, { status: 400 });
     }
 
-    // 1. Obtener la ruta de la imagen de la base de datos
-    const itemStmt = db.prepare('SELECT ruta_imagen FROM solicitud_items WHERE id = ?');
-    const item = itemStmt.get(itemId);
-
+    // 1. Obtener la ruta de la imagen de la base de datos (PostgreSQL)
+    const itemRes = await pool.query('SELECT ruta_imagen FROM solicitud_items WHERE id = $1', [itemId]);
+    const item = itemRes.rows[0];
     if (!item || !item.ruta_imagen) {
       return NextResponse.json({ message: 'El ítem no existe o no tiene una imagen asociada.' }, { status: 404 });
     }
-
     const publicPath = item.ruta_imagen;
     // Construir la ruta completa en el sistema de archivos
     const filePath = path.join(process.cwd(), 'public', publicPath);
 
-    // 2. Actualizar la base de datos para quitar la referencia a la imagen
-    const updateStmt = db.prepare('UPDATE solicitud_items SET ruta_imagen = NULL WHERE id = ?');
-    const updateResult = updateStmt.run(itemId);
-
-    if (updateResult.changes === 0) {
-        // Si no se actualizó ninguna fila, es un problema.
-        throw new Error(`No se pudo actualizar el ítem con ID ${itemId} en la base de datos.`);
+    // 2. Actualizar la base de datos para quitar la referencia a la imagen (PostgreSQL)
+    const updateRes = await pool.query('UPDATE solicitud_items SET ruta_imagen = NULL WHERE id = $1', [itemId]);
+    if (updateRes.rowCount === 0) {
+      throw new Error(`No se pudo actualizar el ítem con ID ${itemId} en la base de datos.`);
     }
 
     // 3. Eliminar el archivo físico del servidor
